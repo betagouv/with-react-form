@@ -19,6 +19,7 @@ describe('getForm', () => {
 
       // then
       expect(form).toStrictEqual({
+        apiPath: "/foos/AE",
         creationUrl: "/foos/creation",
         getReadOnlyUrl: expect.any(Function),
         id: "AE",
@@ -26,6 +27,7 @@ describe('getForm', () => {
         isModifiedEntity: false,
         method: undefined,
         modificationUrl: "/foos/AE/modification",
+        name: "foo",
         readOnly: true
       })
       expect(form.getReadOnlyUrl("AE")).toBe("/foos/AE")
@@ -49,6 +51,7 @@ describe('getForm', () => {
 
       // then
       expect(form).toStrictEqual({
+        apiPath: "/bars/BF",
         creationUrl: "/foos/AE/bars/creation",
         getReadOnlyUrl: expect.any(Function),
         id: "BF",
@@ -56,6 +59,7 @@ describe('getForm', () => {
         isModifiedEntity: false,
         method: undefined,
         modificationUrl: "/foos/AE/bars/BF/modification",
+        name: "bar",
         readOnly: true
       })
       expect(form.getReadOnlyUrl("BF")).toBe("/foos/AE/bars/BF")
@@ -80,6 +84,7 @@ describe('getForm', () => {
 
       // then
       expect(form).toStrictEqual({
+        apiPath: "/foos",
         creationUrl: "/foos/creation",
         getReadOnlyUrl: expect.any(Function),
         id: "creation",
@@ -87,6 +92,7 @@ describe('getForm', () => {
         isModifiedEntity: false,
         method: "POST",
         modificationUrl: undefined,
+        name: "foo",
         readOnly: false
       })
       expect(form.getReadOnlyUrl("AE")).toBe("/foos/AE")
@@ -110,6 +116,7 @@ describe('getForm', () => {
 
       // then
       expect(form).toStrictEqual({
+        apiPath: "/bars",
         creationUrl: "/foos/AE/bars/creation",
         getReadOnlyUrl: expect.any(Function),
         id: "creation",
@@ -117,6 +124,7 @@ describe('getForm', () => {
         isModifiedEntity: false,
         method: "POST",
         modificationUrl: undefined,
+        name: "bar",
         readOnly: false
       })
       expect(form.getReadOnlyUrl("BF")).toBe("/foos/AE/bars/BF")
@@ -142,6 +150,7 @@ describe('getForm', () => {
 
       // then
       expect(form).toStrictEqual({
+        apiPath: "/foos/AE",
         creationUrl: "/foos/creation",
         getReadOnlyUrl: expect.any(Function),
         id: "AE",
@@ -149,6 +158,7 @@ describe('getForm', () => {
         isModifiedEntity: true,
         method: "PATCH",
         modificationUrl: "/foos/AE/modification",
+        name: "foo",
         readOnly: false
       })
       expect(form.getReadOnlyUrl("AE")).toBe("/foos/AE")
@@ -173,6 +183,7 @@ describe('getForm', () => {
 
       // then
       expect(form).toStrictEqual({
+        apiPath: "/bars/BF",
         creationUrl: "/foos/AE/bars/creation",
         getReadOnlyUrl: expect.any(Function),
         id: "BF",
@@ -180,11 +191,10 @@ describe('getForm', () => {
         isModifiedEntity: true,
         method: "PATCH",
         modificationUrl: "/foos/AE/bars/BF/modification",
+        name: "bar",
         readOnly: false
       })
       expect(form.getReadOnlyUrl("BF")).toBe("/foos/AE/bars/BF")
     })
   })
-
-
 })
