@@ -5,14 +5,12 @@ const MODIFICATION = "modification"
 
 const getId = ({ match, location, name }) => {
   const { params } = match
-  console.log(name)
   if (name) {
     return params[`${name}Id`]
   }
 
   const { pathname } = location
   const chunks = pathname.split('/')
-  console.log(chunks, params)
   if (params.modification === MODIFICATION) {
     return chunks.slice(-2)[0]
   }
@@ -25,9 +23,6 @@ const getForm = createSelector(
   ({ location }) => location.search,
   ({ match }) => match.params.modification,
   (id, pathname, search, modification) => {
-
-    console.log({id})
-
     const isCreatedEntity = id === CREATION
     const isModifiedEntity = modification === MODIFICATION
 
@@ -38,14 +33,22 @@ const getForm = createSelector(
 
     let method
     if (isCreatedEntity) {
+      creationUrl = `${pathname}${search}`
       method = "POST"
       getReadOnlyUrl = createdId => `${pathname.replace(`/${CREATION}`, `/${createdId}`)}${search}`
     } else if (isModifiedEntity) {
+      creationUrl = `${pathname.replace(`/${id}/${MODIFICATION}`, '')}/${CREATION}${search}`
       method = "PATCH"
+      modificationUrl = `${pathname}${search}`
       getReadOnlyUrl = () => `${pathname.replace(`/${MODIFICATION}`, "")}${search}`
+    } else if (id) {
+      creationUrl = `${pathname.replace(`/${id}`, '')}/${CREATION}${search}`
+      modificationUrl = `${pathname}/${MODIFICATION}${search}`
+      getReadOnlyUrl = () => `${pathname}${search}`
     } else {
       creationUrl = `${pathname}/${CREATION}${search}`
       modificationUrl = `${pathname}/${MODIFICATION}${search}`
+      getReadOnlyUrl = () => `${pathname}${search}`
     }
 
     return {
