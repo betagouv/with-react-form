@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:latest
-    working_directory: ~/with-query-ci
+    working_directory: ~/with-react-form-ci
     steps:
       - checkout
       # https://circleci.com/docs/2.0/yarn/
