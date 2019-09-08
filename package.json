@@ -35,6 +35,7 @@
     "eslint-plugin-jest": "^22.7.1",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
+    "final-form": "^4.18.5",
     "history": "^4.7.2",
     "jest": "^24.8.0",
     "jest-environment-jsdom": "^24.5.0",
@@ -42,8 +43,13 @@
     "prettier-eslint-cli": "^5.0.0",
     "pretty-quick": "^1.6.0",
     "react-addons-test-utils": "^15.6.2",
+    "react-final-form": "^6.3.0",
+    "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
-    "react-test-renderer": "^16.5.1"
+    "react-test-renderer": "^16.5.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "redux-thunk-data": "1.5.1"
   },
   "keywords": [
     "form",
@@ -62,7 +68,7 @@
     "precommit": "./precommit.sh",
     "prettier": "$(yarn bin)/prettier --write 'src/**/*.js'",
     "prepublish": "yarn run compile",
-    "test": "$(yarn bin)/jest --env=jsdom ./src",
+    "test": "$(yarn bin)/jest --env=jsdom",
     "watch": "nodemon --watch src --exec \"yarn run compile\""
   }
 }

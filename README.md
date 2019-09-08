@@ -5,7 +5,7 @@ A small wrapper of react-router parsing the form params from the location.search
 [![CircleCI](https://circleci.com/gh/betagouv/with-react-form/tree/master.svg?style=svg)](https://circleci.com/gh/betagouv/with-react-form/tree/master)
 [![npm version](https://img.shields.io/npm/v/with-react-form.svg?style=flat-square)](https://npmjs.org/package/with-react-form)
 
-## Basic usage with requestData
+## Basic usage with react-final-form and redux-thunk-data
 
 // We need to be at pathname /foos/AE
 
@@ -45,8 +45,8 @@ class Foo extends PureComponent {
     history.push(getReadOnlyUrl(createdId))
   }
 
-  onFormSubmit = formValues => {
-    const { form, handleSubmitFoo, history } = this.props
+  handleFormSubmit = formValues => {
+    const { form, handleSubmitFoo } = this.props
     const { apiPath, method } = form
     const formSubmitPromise = new Promise(resolve => {
       handleSubmitFoo({
@@ -59,6 +59,47 @@ class Foo extends PureComponent {
     return formSubmitPromise
   }
 
+  renderField = ({ input }) => {
+    const { form } = this.props
+    const { readOnly } = form
+    return (
+      <input
+        {...input}
+        readOnly={readOnly}
+        type="text"
+      />
+    )
+  }
+
+  renderForm = ({ handleSubmit }) => {
+    const { form } = this.props
+    const { readOnly } = form
+    return (
+      <form onSubmit={handleSubmit}>
+        <Field
+          name="title"
+          render={this.renderField}
+        />
+        {
+          readOnly
+          ? (
+            <button
+              onClick={this.handleActivateForm}
+              type="button"
+            >
+              {'Modify'}
+            </button>
+          )
+          : (
+            <button type="submit">
+              {'Save'}
+            </button>
+          )
+        }
+      </form>
+    )
+  }
+
   render () {
     const { form } = this.props
     const { readOnly } = form
@@ -66,56 +107,22 @@ class Foo extends PureComponent {
       <Form
         initialValues={initialValues}
         onSubmit={this.onFormSubmit}
-        render={() => (
-          <form onSubmit={handleSubmit}>
-            <Field
-              name={name}
-              render={({ input, meta }) => (
-                <input
-                  {...input}
-                  readOnly={readOnly}
-                  type="text"
-                />
-              )}
-            />
-            {
-              readOnly
-              ? (
-                <button onClick={this.handleActivateForm} type="button">
-                  Modify
-                </button>
-              )
-              : (
-                <button type="submit">
-                  Save
-                </button>
-              )
-            }
-          </form>
-        )}
+        render={this.renderForm}
       />
     )
   }
 }
 
-Foo.defaultProps = {
-  foo: null
-}
-
 Foo.propTypes = {
-  foo: PropTypes.shape(),
-  handleRequestFoo: PropTypes.func.isRequired,
-  handleSubmitFoo: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      fooId: PropTypes.string
-    }).isRequired
+  form: PropTypes.shape({
+    apiPath: PropTypes.string,
+    getReadOnlyUrl: PropTypes.func,
+    isCreatedEntity: PropTypes.bool,
+    method: PropTypes.string,
+    modificationUrl: PropTypes.string,
+    readOnly: PropTypes.bool
   }).isRequired,
 }
-
-const mapStateToProps = (state, ownProps) => ({
-  foo: selectFooById(state, ownProps.match.params.fooId)
-})
 
 const mapDispatchProps = (dispatch, ownProps) => ({
   handleRequestFoo: config => dispatch(requestData(config)),
@@ -125,6 +132,6 @@ const mapDispatchProps = (dispatch, ownProps) => ({
 export default compose(
   withRouter,
   withForm,
-  connect(mapStateToProps, mapDispatchProps)
+  connect(null, mapDispatchProps)
 )(Foo)
 ```
