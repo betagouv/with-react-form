@@ -1,13 +1,22 @@
 # with-react-form
 
-A small wrapper of react-router parsing the form params from the location.search
+A small wrapper of react-router parsing the form params from the location.pathname and match.params
 
 [![CircleCI](https://circleci.com/gh/betagouv/with-react-form/tree/master.svg?style=svg)](https://circleci.com/gh/betagouv/with-react-form/tree/master)
 [![npm version](https://img.shields.io/npm/v/with-react-form.svg?style=flat-square)](https://npmjs.org/package/with-react-form)
 
+
+## Convention
+
+Your app needs to work with a special react-router syntax. Given the url, withForm will find by itself if you are in readOnly, creation or modification state. In summary, your React Route needs to be with path = "/foos/:fooId([A-Z0-9]+|creation)/:modification(modification)?", then
+
+  - "/foos/AE" is a readOnly url, for the specific fetch of the entity foo with id=AE,
+  - "/foos/creation" is the creation url for posting a new foo object,
+  - "/foos/AE/modification" is the modification url for patching an already existing foo entity with id AE.
+
 ## Basic usage with react-final-form and redux-thunk-data
 
-// We need to be at pathname /foos/AE
+## Starting at pathname /foos/AE
 
 ```javascript
 import PropTypes from 'prop-types'
