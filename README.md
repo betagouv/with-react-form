@@ -8,7 +8,7 @@ A small wrapper of react-router parsing the form params from the location.pathna
 
 ## Convention
 
-Your app needs to work with a special react-router syntax. Given the url, withForm will find by itself if you are in readOnly, creation or modification state. In summary, your React Route needs to be with path = "/foos/:fooId([A-Z0-9]+|creation)/:modification(modification)?", then
+Your app needs to work with a special react-router syntax. Given the url, withForm will find by itself if you are in readOnly, creation or modification state. In summary, your React Route needs to be with path = "/foos/:fooId([A-Z0-9]+|creation)/:modification(modification)?", then :
 
   - "/foos/AE" is a readOnly url, for the specific fetch of the entity foo with id=AE,
   - "/foos/creation" is the creation url for posting a new foo object,
@@ -16,7 +16,7 @@ Your app needs to work with a special react-router syntax. Given the url, withFo
 
 ## Basic usage with react-final-form and redux-thunk-data
 
-## Starting at pathname /foos/AE
+Starting at pathname /foos/AE :
 
 ```javascript
 import PropTypes from 'prop-types'
