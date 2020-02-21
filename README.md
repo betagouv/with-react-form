@@ -1,5 +1,9 @@
 # with-react-form
 
+## DEPRECATED
+New version is here now https://github.com/betagouv/with-react-formidable
+
+
 A small wrapper of react-router parsing the form params from the location.pathname and match.params
 
 [![CircleCI](https://circleci.com/gh/betagouv/with-react-form/tree/master.svg?style=svg)](https://circleci.com/gh/betagouv/with-react-form/tree/master)
